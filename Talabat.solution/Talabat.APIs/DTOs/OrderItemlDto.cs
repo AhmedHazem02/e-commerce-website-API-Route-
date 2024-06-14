@@ -1,0 +1,14 @@
+﻿using Talabat.Core.OrderAggragate;
+
+namespace Talabat.APIs.DTOs
+{
+    public class OrderItemlDto
+    {
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string PictureUrl { get; set; }
+
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+    }
+}

@@ -13,9 +13,7 @@ namespace Talabat.APIs.DTOs
         [Required]
         public string Brand { get; set; }
         [Required]
-
         public string Type { get; set; }
-
         [Required]
         [Range(0.1,double.MaxValue)]
         public decimal Price { get; set; }

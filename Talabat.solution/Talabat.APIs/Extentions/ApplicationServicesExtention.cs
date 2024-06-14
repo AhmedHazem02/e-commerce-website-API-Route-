@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Helper;
+using Talabat.Core;
 using Talabat.Core.Repositories;
+using Talabat.Core.Service;
 using Talabat.Repository;
+using Talabat.Service;
 
 namespace Talabat.APIs.Extentions
 {
@@ -13,6 +16,8 @@ namespace Talabat.APIs.Extentions
 
             Services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
             Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            Services.AddScoped<IOrderService,OrderServices>();
             Services.AddAutoMapper(typeof(MappingProfile));
             Services.Configure<ApiBehaviorOptions>(Options =>
             {

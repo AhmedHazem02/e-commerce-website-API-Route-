@@ -15,8 +15,8 @@ namespace Talabat.Repository
     {
         private readonly IDatabase _database;
 
-        public BasketRepository(IConnectionMultiplexer Redis) {
-            _database = Redis.GetDatabase();
+        public BasketRepository(IConnectionMultiplexer redis) {
+            _database = redis.GetDatabase();
         }
         public async Task<bool> DeleteBasketAsync(string BasketId)
         {
@@ -29,12 +29,12 @@ namespace Talabat.Repository
            return Basket.IsNull?null:JsonSerializer.Deserialize<CustomerBasket>(Basket);
         }
 
-        public async Task<CustomerBasket?> UpdataBasketAsync(CustomerBasket customerBasket)
+        public async Task<CustomerBasket?> UpdataBasketAsync(CustomerBasket Basket)
         {
-             var JsonBasket=JsonSerializer.Serialize(customerBasket);
-            var Created= await _database.StringSetAsync(customerBasket.Id, JsonBasket, TimeSpan.FromDays(1));
+             var JsonBasket=JsonSerializer.Serialize(Basket);
+            var Created= await _database.StringSetAsync(Basket.Id, JsonBasket, TimeSpan.FromDays(5));
             if(!Created)return null;
-            return await GetBasketAsync(customerBasket.Id);
+            return await GetBasketAsync(Basket.Id);
         }
     }
 }

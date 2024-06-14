@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using Talabat.APIs.Errors;
 using Talabat.APIs.Extentions;
@@ -48,6 +49,15 @@ namespace Talabat.APIs
             builder.Services.AddApplicationExtention();
             //For Identity
             builder.Services.AddIdentityServices(builder.Configuration);
+            builder.Services.AddCors(Options =>
+            {
+                Options.AddPolicy("MyPolicy", option =>
+                {
+                    option.AllowAnyHeader();
+                    option.AllowAnyMethod();
+                    option.WithOrigins(builder.Configuration["FrontBaseUrl"]);
+                });
+            }); 
 
 
 
@@ -92,7 +102,8 @@ namespace Talabat.APIs
           
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseHttpsRedirection();
-            app.UseStaticFiles(); 
+            app.UseStaticFiles();
+            app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

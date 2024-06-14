@@ -22,24 +22,24 @@ namespace Talabat.APIs.Controllers
 
         // Get
         [HttpGet]
-        public async Task<ActionResult<CustomerBasket>>GetBasket(string Id)
+        public async Task<ActionResult<CustomerBasket>>GetBasket(string BasketId)
         {
-            var Basket=_basketRepository.GetBasketAsync(Id);
-            return Basket is null ? new CustomerBasket(Id) : Ok(Basket);
+            var Basket=await _basketRepository.GetBasketAsync(BasketId);
+            return Basket is null ? new CustomerBasket(BasketId) : Basket;
         }
 
         // CreateOr Updata
         [HttpPost]
         public async Task<ActionResult<CustomerBasket>>UpdataOrCreate(CustomerBasketDto basket)
         { 
-            var MappingBasket = _mapper.Map<CustomerBasketDto, CustomerBasket>(basket);
-            var CreateOrDelete=await _basketRepository.UpdataBasketAsync(MappingBasket);
-            if(CreateOrDelete is null)return BadRequest(new ApiResponse(400));
-            return Ok(CreateOrDelete);
+           var MappingBasket = _mapper.Map<CustomerBasketDto, CustomerBasket>(basket);
+            var CreateOrUpdata=await _basketRepository.UpdataBasketAsync(MappingBasket);
+            if(CreateOrUpdata is null)return BadRequest(new ApiResponse(400));
+            return Ok(CreateOrUpdata);
         }
         //Delete
         [HttpDelete]
-        public async Task<bool>DeleteBasket(string Id)
+        public async Task<ActionResult<bool>>DeleteBasket(string Id)
         {
             return await _basketRepository.DeleteBasketAsync(Id);
         }

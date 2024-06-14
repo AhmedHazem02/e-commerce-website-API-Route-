@@ -5,18 +5,18 @@ namespace Talabat.APIs.Helper
     public class Pagination<T>
     {
        
-        public Pagination(int pagesize, int pageIndex, IReadOnlyList<T> data,int Count)
+        public Pagination(int pagesize, int pageIndex, IReadOnlyList<T> data,int count)
         {
             PageSize = pagesize;
             PageIndex = pageIndex;
             Data = data;
-            PageCount = Count;
+            Count = count;
         }
 
         public int PageSize {  get; set; }
        
         public int PageIndex {  get; set; }
-        public int PageCount { get; set; }
+        public int Count { get; set; }
 
         public IReadOnlyList<T> Data { get; set; }
         
